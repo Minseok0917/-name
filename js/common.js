@@ -66,7 +66,7 @@ class SnowCanvas extends Canvas{
 		ctx.lineWidth  = 3;
 		ctx.font = `${ts}px serif`;
 
-		t = textArray[random(0,textArrayLength)];
+		// t = textArray[random(0,textArrayLength)];
 		if( r%2 == 0 ){
 			ctx.strokeText(t,x,y);
 		}else{
