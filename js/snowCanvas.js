@@ -32,17 +32,18 @@ export default class MaskFontRain extends Canvas{
 			const textOptions = { 
 				x: random(fontSize,canvasWidth-fontSize),
 				y: random(-20,-30),
-				speed: random(5,10),
+				speed: random(10,12),
 				text: textList[random(0,textListLength)],
 				isStroke:random(0,10) % 2 === 0 ? true : false,
 				fontSize
-			}
+			};
 			this.textArray = [...this.textArray, new Text(textOptions) ]
 		}
 	}
 
 	animated(){
 		this.canvasReset();
+		console.log(this.textArray);
 		for(let text of this.textArray){
 			const { posY } = text;
 			if( this.canvasHeight <= posY ){

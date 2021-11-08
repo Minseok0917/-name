@@ -16,7 +16,6 @@ export default class Canvas{
 	drawText({x,y,text,fontSize,isStroke=false}){
 		const { context } = this;
 		context.beginPath();
-		context.fillStyle = "#fff";
 		context.textAlign ='center';
 		context.textBaseline = 'middle';
 		context.lineWidth  = 3;
