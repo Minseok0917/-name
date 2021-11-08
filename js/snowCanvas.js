@@ -1,80 +1,55 @@
 import Canvas from './canvas.js';
-import Font from './font.js';
+import Text from './text.js';
 import { random } from './utils.js';
 
 
-class MaskFontRain extends Canvas{
-	constructor({width,height,maskElement,fontList}){
+export default class MaskFontRain extends Canvas{
+	constructor({width,height,maskElement,textList}){
 		super(width, height);
 		this.maskElement = maskElement;
-		this.fontList = fontList;
-		this.snowList = [];
-
-
-		this.timer = 500;
-		this.timerSnowCount = {
+		this.textList = textList;
+		this.textListLength = textList.length-1;
+		this.addTextState = {
+			timer:500,
 			min:10,
 			max:30
 		}
-		this.snowArray = [];
+		this.textArray = []; // Text 객체 배열 
 
 		this.init();
 	}
 
-
-
-
 	init(){
-		setInterval(()=>{
-			this.addSnow();			
-		},this.timer);
-
+		setInterval(this.addText.bind(this),this.addTextState.timer);
 		this.animated();
 	}
 
-	draw(x,y,r,t,ts){
-		const { ctx } = this;
-		ctx.beginPath();
-		ctx.textAlign ='center';
-		ctx.textBaseline = 'middle';
-		ctx.lineWidth  = 3;
-		ctx.font = `${ts}px serif`;
+	addText(){
+		const { addTextState : { min , max }, canvasWidth , textList , textListLength }  = this;
+		const textCount = random(min,max);
+		for(let index=0; index<textCount; index++){
+			const fontSize = random(8,50);
+			const textOptions = { 
+				x: random(fontSize,canvasWidth-fontSize),
+				y: random(-20,-30),
+				speed: random(5,10),
+				text: textList[random(0,textListLength)],
+				isStroke:random(0,10) % 2 === 0 ? true : false,
+				fontSize
+			}
+			this.textArray = [...this.textArray, new Text(textOptions) ]
+		}
+	}
 
-		// t = textArray[random(0,textArrayLength)];
-		if( r%2 == 0 ){
-			ctx.strokeText(t,x,y);
-		}else{
-			ctx.fillText(t,x,y);
-		}
-		// ctx.arc(x,y,r,0,Math.PI*2);
-		// ctx.fill();
-	}
-	addSnow(){
-		const {timerSnowCount : { min , max }, canvasWidth} = this;
-		const snowCount = random(min,max);
-		for(let index=0; index<snowCount; index++){
-			const r = random(5,30);
-			const snowSetting = { 
-				x: random(r,canvasWidth-r),
-				y: random(-r,-r*3),
-				r,
-				s: random(5,10),
-				t: textArray[random(0,textArrayLength)],
-				ts:random(10,50)
-			}
-			this.snowArray = [...this.snowArray, new Snow(snowSetting) ]
-		}
-	}
 	animated(){
-		const { canvasWidth , canvasHeight , ctx } = this;
-		ctx.clearRect(0,0,canvasWidth,canvasHeight);
-		for(let snow of this.snowArray){
-			const { posX, posY, r, t , ts} = snow;
-			if( canvasHeight <= posY ){
-				this.snowArray = this.snowArray.filter( fsnow => fsnow != snow );
+		this.canvasReset();
+		for(let text of this.textArray){
+			const { posY } = text;
+			if( this.canvasHeight <= posY ){
+				this.textArray = this.textArray.filter( ftext => ftext != text );
 			}
-			this.draw(posX,posY,r, t , ts);
-			snow.addSpeed();			
+			text.updateY();
+			this.drawText({...text,...{ y:posY }});
 		}
 
 		this.png();
@@ -82,8 +57,8 @@ class MaskFontRain extends Canvas{
 	}
 
 	png(){
-		const { canvas } = this;
+		const { canvas , maskElement } = this;
 		const image = canvas.toDataURL('image/png');
-		maskImage.style.webkitMask = `url(${image}) no-repeat center center`;
+		maskElement.style.webkitMask = `url(${image}) no-repeat center center`;
 	}
 }
