@@ -15,32 +15,45 @@ export default class MaskFontRain extends Canvas{
 			max:20
 		}
 		this.textArray = []; // Text 객체 배열 
-		this.isAnimated = true;
 
 		this.init();
 	}
 
 	init(){
+		this.event();
 		this.addText();
 		this.animated();
+	}
+
+	event(){
+		this.maskElement?.addEventListener('mouseup',(event)=> this.handleClick(event) );
+	}
+
+	handleClick(event){
+		this.textArray = [...this.textArray,new Text({ ...this.getTextOption(),x:event.offsetX, y:event.offsetY })];
 	}
 
 	addText(){
 		const { addTextState : { min , max }, canvasWidth , textList , textListLength }  = this;
 		const textCount = random(min,max);
 		for(let index=0; index<textCount; index++){
-			const fontSize = random(8,50);
-			const textOptions = { 
-				x: random(fontSize,canvasWidth-fontSize),
-				y: random(-20,-30),
-				speed: random(5,12),
-				text: textList[random(0,textListLength)],
-				isStroke:random(0,10) % 2 === 0 ? true : false,
-				fontSize
-			};
-			this.textArray = [...this.textArray, new Text(textOptions) ]
+			this.textArray = [...this.textArray, new Text(this.getTextOption()) ]
 		}
 		setTimeout(()=> requestAnimationFrame(this.addText.bind(this)), this.addTextState.timer);
+	}
+
+	getTextOption(){
+		const { canvasWidth, textList, textListLength } = this;
+		const fontSize = random(8,50);
+		const textOptions = { 
+			x: random(fontSize,canvasWidth-fontSize),
+			y: random(-20,-30),
+			speed: random(5,12),
+			text: textList[random(0,textListLength)],
+			isStroke:random(0,10) % 2 === 0 ? true : false,
+			fontSize
+		};
+		return textOptions;
 	}
 
 	animated(){

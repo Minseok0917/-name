@@ -5,10 +5,8 @@ export default class Font{
 		this.speed = speed; // speed
 		this.text = text; // text
 		this.fontSize = fontSize; // font size
-		this.isStroke = isStroke;
+		this.isStroke = isStroke; // is stroke
 
-		this.bposX = x;
-		this.bposY = y;
 		this.posX = x; // positionX
 		this.posY = y; // positionY
 	}
