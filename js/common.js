@@ -3,13 +3,9 @@ import MaskFontRain from './module/SnowCanvas.js';
 const maskImage = document.getElementById('backgruond-mask');
 
 
-
-const a = new MaskFontRain({
+new MaskFontRain({
 	width:window.innerWidth,
 	height:window.innerHeight,
 	maskElement:maskImage,
-	textList:'ABC'.split('')
+	textList:'QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm0987654321'.split('')
 });
-
-
-// document.body.append(a.canvas);

@@ -11,16 +11,17 @@ export default class MaskFontRain extends Canvas{
 		this.textListLength = textList.length-1;
 		this.addTextState = {
 			timer:500,
-			min:10,
-			max:30
+			min:5,
+			max:20
 		}
 		this.textArray = []; // Text 객체 배열 
+		this.isAnimated = true;
 
 		this.init();
 	}
 
 	init(){
-		setInterval(this.addText.bind(this),this.addTextState.timer);
+		this.addText();
 		this.animated();
 	}
 
@@ -39,6 +40,7 @@ export default class MaskFontRain extends Canvas{
 			};
 			this.textArray = [...this.textArray, new Text(textOptions) ]
 		}
+		setTimeout(()=> requestAnimationFrame(this.addText.bind(this)), this.addTextState.timer);
 	}
 
 	animated(){

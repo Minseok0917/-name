@@ -6,6 +6,21 @@ export default class Canvas{
 		this.canvasHeight = height;
 		this.canvas.width = width;
 		this.canvas.height = height;
+
+		this.event();
+	}
+
+	event(){
+		window.addEventListener('resize',this.handleResize.bind(this));
+	}
+
+	handleResize(){
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+		this.canvasWidth = width;
+		this.canvasHeight= height;
+		this.canvas.width = width;
+		this.canvas.height = height;
 	}
 
 	canvasReset(){
@@ -26,4 +41,5 @@ export default class Canvas{
 			context.fillText(text,x,y);
 		}
 	}
+	
 }
