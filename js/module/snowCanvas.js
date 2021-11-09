@@ -1,6 +1,6 @@
-import Canvas from './canvas.js';
-import Text from './text.js';
-import { random } from './utils.js';
+import Canvas from '../class/canvas.js';
+import Text from '../class/text.js';
+import { random } from '../utils.js';
 
 
 export default class MaskFontRain extends Canvas{
@@ -32,7 +32,7 @@ export default class MaskFontRain extends Canvas{
 			const textOptions = { 
 				x: random(fontSize,canvasWidth-fontSize),
 				y: random(-20,-30),
-				speed: random(10,12),
+				speed: random(5,12),
 				text: textList[random(0,textListLength)],
 				isStroke:random(0,10) % 2 === 0 ? true : false,
 				fontSize
@@ -43,7 +43,6 @@ export default class MaskFontRain extends Canvas{
 
 	animated(){
 		this.canvasReset();
-		console.log(this.textArray);
 		for(let text of this.textArray){
 			const { posY } = text;
 			if( this.canvasHeight <= posY ){

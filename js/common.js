@@ -1,4 +1,4 @@
-import MaskFontRain from './SnowCanvas.js';
+import MaskFontRain from './module/SnowCanvas.js';
 
 const maskImage = document.getElementById('backgruond-mask');
 
