@@ -3,3 +3,5 @@
 mask 기능을 이용해서 html 에 canvas 태그 없이 애니메이션 기능을 구현해보았음.
 
 리팩토링하다 먼가 이상해짐
+
+Commit TEST
