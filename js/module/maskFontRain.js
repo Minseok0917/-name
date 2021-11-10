@@ -13,7 +13,12 @@ export default class MaskFontRain extends Canvas{
 			timer:500,
 			min:5,
 			max:20
-		}
+		};
+		this.dragStatus = {
+			isDrag:false,
+			x:0,
+			y:0
+		};
 		this.textArray = []; // Text 객체 배열 
 
 		this.init();
@@ -26,9 +31,26 @@ export default class MaskFontRain extends Canvas{
 	}
 
 	event(){
-		this.maskElement?.addEventListener('mouseup',(event)=> this.handleClick(event) );
+		this.maskElement?.addEventListener('mousedown',(event)=> this.handleMouseDown(event));
+		this.maskElement?.addEventListener('mousemove',(event)=> this.handleMouseMove(event));
+		this.maskElement?.addEventListener('mouseup',(event)=> this.handleMouseUp(event));
 	}
 
+	handleMouseDown(event){
+		this.dragStatus.isDrag = true;
+		this.dragStatus.x = event.offsetX;
+		this.dragStatus.y = event.offsetY;
+	}
+	handleMouseMove(event){
+		if( this.dragStatus.isDrag ){
+			this.dragStatus.x = event.offsetX;
+			this.dragStatus.y = event.offsetY;
+			this.textArray = [...this.textArray,new Text({ ...this.getTextOption(),x:event.offsetX, y:event.offsetY })];
+		}
+	}
+	handleMouseUp(event){
+		this.dragStatus.isDrag = false;
+	}
 	handleClick(event){
 		this.textArray = [...this.textArray,new Text({ ...this.getTextOption(),x:event.offsetX, y:event.offsetY })];
 	}
