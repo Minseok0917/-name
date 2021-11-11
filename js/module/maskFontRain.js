@@ -16,8 +16,8 @@ export default class MaskFontRain extends Canvas{
 		};
 		this.dragStatus = {
 			isDrag:false,
-			x:0,
-			y:0
+			x:-100,
+			y:-100,
 		};
 		this.textArray = []; // Text 객체 배열 
 
@@ -49,7 +49,6 @@ export default class MaskFontRain extends Canvas{
 	handleMouseUp(event){
 		this.dragStatus.isDrag = false;
 	}
-
 	autoDragAddText(){
 		this.textArray = [
 			...this.textArray,
@@ -87,6 +86,22 @@ export default class MaskFontRain extends Canvas{
 
 	animated(){
 		this.canvasReset();
+		this.drawCircle({ // pointer
+			x:this.dragStatus.x,
+			y:this.dragStatus.y,
+			r:10,
+			color:'#fff',
+		});
+		if( this.dragStatus.isDrag ){ // pointer out circle 
+			this.drawCircle({
+				x:this.dragStatus.x,
+				y:this.dragStatus.y,
+				r:20,
+				color:'#fff',
+				isStroke:true,
+			});
+		}
+
 		for(let text of this.textArray){
 			const { posY } = text;
 			if( this.canvasHeight <= posY ){

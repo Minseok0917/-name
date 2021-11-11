@@ -42,4 +42,11 @@ export default class Canvas{
 		}
 	}
 	
+	drawCircle({x,y,r,color,isStroke=false}){
+		const { context } = this;
+		const to = isStroke ? 'stroke' : 'fill';
+		context.beginPath();
+		context.arc(x,y,r,0,Math.PI*2);
+		context[to]();
+	}
 }
