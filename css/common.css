@@ -6,6 +6,16 @@ img{ width: 100%; height: 100%; object-fit: cover; }
 
 
 /* backgruond-mask */
+#load-bg{
+    position: absolute;
+    left: 0;
+    top:0;
+    right: 0;
+    bottom: 0;
+    background: #000;
+    z-index: 1; 
+}
+
 #backgruond-mask{ 
     -webkit-user-drag: none;  /* image drag 방지 */
 } 

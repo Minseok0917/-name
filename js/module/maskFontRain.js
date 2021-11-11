@@ -38,22 +38,27 @@ export default class MaskFontRain extends Canvas{
 
 	handleMouseDown(event){
 		this.dragStatus.isDrag = true;
-		this.dragStatus.x = event.offsetX;
-		this.dragStatus.y = event.offsetY;
+		this.autoDragAddText();
 	}
 	handleMouseMove(event){
-		if( this.dragStatus.isDrag ){
-			this.dragStatus.x = event.offsetX;
-			this.dragStatus.y = event.offsetY;
-			this.textArray = [...this.textArray,new Text({ ...this.getTextOption(),x:event.offsetX, y:event.offsetY })];
-		}
+		this.dragStatus.x = event.offsetX;
+		this.dragStatus.y = event.offsetY;
 	}
 	handleMouseUp(event){
 		this.dragStatus.isDrag = false;
 	}
-	handleClick(event){
-		this.textArray = [...this.textArray,new Text({ ...this.getTextOption(),x:event.offsetX, y:event.offsetY })];
+
+	autoDragAddText(){
+		this.textArray = [
+			...this.textArray,
+			new Text({ ...this.getTextOption(),x:this.dragStatus.x, y:this.dragStatus.y }),
+			new Text({ ...this.getTextOption(),x:this.dragStatus.x, y:this.dragStatus.y })
+		];
+		if( this.dragStatus.isDrag ){
+			requestAnimationFrame(this.autoDragAddText.bind(this));
+		}
 	}
+
 
 	addText(){
 		const { addTextState : { min , max }, canvasWidth , textList , textListLength }  = this;
