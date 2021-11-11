@@ -38,6 +38,8 @@ export default class MaskFontRain extends Canvas{
 
 	handleMouseDown(event){
 		this.dragStatus.isDrag = true;
+		this.dragStatus.x = event.offsetX;
+		this.dragStatus.y = event.offsetY;
 		this.autoDragAddText();
 	}
 	handleMouseMove(event){
