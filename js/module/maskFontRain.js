@@ -12,7 +12,7 @@ export default class MaskFontRain extends Canvas{
 		this.addTextState = {
 			timer:500,
 			min:5,
-			max:20
+			max:12
 		};
 		this.dragStatus = {
 			isDrag:false,
@@ -31,9 +31,9 @@ export default class MaskFontRain extends Canvas{
 	}
 
 	event(){
-		this.maskElement?.addEventListener('mousedown',(event)=> this.handleMouseDown(event));
-		this.maskElement?.addEventListener('mousemove',(event)=> this.handleMouseMove(event));
-		this.maskElement?.addEventListener('mouseup',(event)=> this.handleMouseUp(event));
+		this.maskElement.addEventListener('mousedown',(event)=> this.handleMouseDown(event));
+		this.maskElement.addEventListener('mousemove',(event)=> this.handleMouseMove(event));
+		this.maskElement.addEventListener('mouseup',(event)=> this.handleMouseUp(event));
 	}
 
 	handleMouseDown(event){
@@ -62,7 +62,7 @@ export default class MaskFontRain extends Canvas{
 
 
 	addText(){
-		const { addTextState : { min , max }, canvasWidth , textList , textListLength }  = this;
+		const { addTextState : { min , max }, textList , textListLength }  = this;
 		const textCount = random(min,max);
 		for(let index=0; index<textCount; index++){
 			this.textArray = [...this.textArray, new Text(this.getTextOption()) ]
@@ -118,6 +118,6 @@ export default class MaskFontRain extends Canvas{
 	png(){
 		const { canvas , maskElement } = this;
 		const image = canvas.toDataURL('image/png');
-		maskElement.style.webkitMask = `url(${image}) no-repeat center center`;
+		maskElement.style.webkitMaskImage = `url(${image})`;
 	}
 }

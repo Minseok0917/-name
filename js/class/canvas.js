@@ -1,16 +1,15 @@
 export default class Canvas{
 	constructor(width,height){
 		this.canvas = document.createElement('canvas');
-		this.context = this.canvas.getContext('2d');
+		this.context = this.canvas.getContext('2d',{alpha: false});
 		this.canvasWidth = width;
 		this.canvasHeight = height;
 		this.canvas.width = width;
 		this.canvas.height = height;
-
-		this.event();
+		this.canvasEvent();
 	}
 
-	event(){
+	canvasEvent(){
 		window.addEventListener('resize',this.handleResize.bind(this));
 	}
 
